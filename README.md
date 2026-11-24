@@ -1,18 +1,14 @@
-# MinimeMod (position adjustment v8)
+# MinimeMod (attachment and skin-layer correction)
 
-This version adjusts the attachment transforms for the head, shoulder, hand, chain, and arm slots.
+Minecraft 26.2 / Fabric client mod.
 
-- The head minime is moved down to sit close to the player's head surface.
-- Shoulder and arm minimes are anchored to the corresponding arm model pivots instead of the body origin.
-- The hand minime is positioned relative to the right hand point.
-- The retired back slot remains removed.
+This revision addresses two concrete model issues:
+
+- Sitting minimes are anchored using the actual lower extent of their bent leg cuboids, rather than the full straight-leg model height.
+- The player skin overlay parts (hat, jacket, sleeves, pants) explicitly copy the transforms of their matching base parts in `MinimeModel.setupAnim`.
+
+The back-mounted slot remains removed. The settings screen and the five remaining slots are retained.
 
 Build with Java 25 and Gradle 9.8+ using `gradle build`.
 
-These placement changes still require an in-game visual check because the exact result depends on the Minecraft renderer's model pose and the selected global/slot scale.
-
-
-## Positioning fix (v9)
-- Head anchor now accounts for the mini model's full 24-pixel height so its feet meet the player's head top.
-- Hand anchor accounts for the raised-hand pose and the scaled distance from the mini head pivot to its hand tips.
-- Shoulder and arm anchors remain attached to the animated player arm pivots, with the mini feet aligned to the upper arm face.
+The code has been checked against the Minecraft 26.2 mapped `ModelPart.copyTransform` API. An actual in-game visual test is still required to confirm the final attachment placement.

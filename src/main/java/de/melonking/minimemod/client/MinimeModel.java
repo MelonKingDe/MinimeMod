@@ -73,6 +73,20 @@ public class MinimeModel extends PlayerModel {
 		}
 	}
 
+	/**
+	 * Hoechster Y-Wert (nach unten positiv) der sitzenden Fuesse relativ zum
+	 * Modellursprung. Die Bein-Cuboids reichen von y=0 bis y=12 und von z=-2
+	 * bis z=2. Die Rotation wird mitgerechnet, damit der Sitz-Anchor nicht
+	 * faelschlich die volle, senkrechte Beinlaenge verwendet.
+	 */
+	public float sittingBottomY() {
+		return Math.max(legBottomY(rLegX), legBottomY(lLegX));
+	}
+
+	private static float legBottomY(float xRot) {
+		return 12.0f + 12.0f * Mth.cos(xRot) + 2.0f * Math.abs(Mth.sin(xRot));
+	}
+
 	@Override
 	public void setupAnim(AvatarRenderState state) {
 		this.root().getAllParts().forEach(ModelPart::resetPose);
@@ -87,10 +101,14 @@ public class MinimeModel extends PlayerModel {
 		rightLeg.xRot = rLegX;
 		leftLeg.xRot = lLegX;
 
-		// Outer-Layer-Teile (Hat, Jacket, Sleeves und Pants) sind im
-		// PlayerModel bereits Kinder der jeweiligen Basisteile. Sie erben
-		// deren Transformation automatisch. Nicht manuell kopieren, sonst
-		// wird die Transformation doppelt angewendet und die Schichten
-		// verschieben sich neben Arme bzw. Beine.
+		// Die Skin-Outer-Layer sind separate ModelParts (keine Kinder der
+		// Basisteile). Deshalb muessen sie nach dem Setzen der Pose explizit
+		// dieselben Transformationen erhalten.
+		hat.copyTransform(head);
+		jacket.copyTransform(body);
+		rightSleeve.copyTransform(rightArm);
+		leftSleeve.copyTransform(leftArm);
+		rightPants.copyTransform(rightLeg);
+		leftPants.copyTransform(leftLeg);
 	}
 }
