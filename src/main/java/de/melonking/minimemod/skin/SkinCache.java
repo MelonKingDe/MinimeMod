@@ -90,7 +90,7 @@ public final class SkinCache {
 			String uuid = profile.get("id").getAsString();
 
 			JsonObject session = JsonParser.parseString(
-					fetchString("https://sessionserver.minecraft.net/session/minecraft/profile/" + uuid)).getAsJsonObject();
+					fetchString("https://sessionserver.mojang.com/session/minecraft/profile/" + uuid)).getAsJsonObject();
 			String encoded = null;
 			JsonArray props = session.getAsJsonArray("properties");
 			for (JsonElement el : props) {
@@ -127,6 +127,7 @@ public final class SkinCache {
 				e.texture = id;
 				e.slim = slim;
 				e.status = Status.READY;
+				MinimeMod.LOGGER.info("Loaded minime skin for {} (slim={})", key, slim);
 			});
 		} catch (Exception ex) {
 			fail(e, key, ex);
