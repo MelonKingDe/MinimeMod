@@ -30,7 +30,7 @@ public class MinimeSettingsScreen extends Screen {
 		int cx = this.width / 2;
 		int y = 12;
 
-		addRenderableWidget(new StringWidget(cx - 150, y, 300, 12, this.title, this.font).alignCenter());
+		addRenderableWidget(new StringWidget(cx - 150, y, 300, 12, this.title, this.font));
 		y += 20;
 
 		addRenderableWidget(Button.builder(
@@ -57,10 +57,11 @@ public class MinimeSettingsScreen extends Screen {
 
 			EditBox box = new EditBox(this.font, cx - 36, y, 186, 20, slot.label());
 			box.setMaxLength(16);
-			box.setFilter(s -> s.matches("[A-Za-z0-9_]*"));
+			// Names are sanitized before being used as skin lookup keys.
+			box.setResponder(v -> sc.name = v.replaceAll("[^A-Za-z0-9_]", "").trim());
 			box.setHint(Component.translatable("minimemod.settings.name_hint"));
 			box.setValue(sc.name == null ? "" : sc.name);
-			box.setResponder(v -> sc.name = v.trim());
+			
 			addRenderableWidget(box);
 
 			y += 24;
@@ -77,7 +78,7 @@ public class MinimeSettingsScreen extends Screen {
 	@Override
 	public void onClose() {
 		MinimeConfig.save();
-		this.minecraft.setScreen(parent);
+		this.minecraft.gui.setScreen(parent);
 	}
 
 	private static class FloatSlider extends AbstractSliderButton {

@@ -7,10 +7,10 @@ import de.melonking.minimemod.config.MinimeConfig;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
-import net.fabricmc.fabric.api.client.rendering.v1.LivingEntityFeatureRendererRegistrationCallback;
+import net.fabricmc.fabric.api.client.rendering.v1.LivingEntityRenderLayerRegistrationCallback;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.model.player.PlayerModel;
-import net.minecraft.client.renderer.entity.AvatarRenderer;
+import net.minecraft.client.renderer.entity.player.AvatarRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.state.AvatarRenderState;
 import net.minecraft.resources.Identifier;
@@ -36,11 +36,11 @@ public class MinimeMod implements ClientModInitializer {
 
 		ClientTickEvents.END_CLIENT_TICK.register(client -> {
 			while (openSettings.consumeClick()) {
-				client.setScreen(new MinimeSettingsScreen(client.screen));
+				client.gui.setScreen(new MinimeSettingsScreen(client.gui.screen()));
 			}
 		});
 
-		LivingEntityFeatureRendererRegistrationCallback.EVENT.register((entityType, renderer, helper, context) -> {
+		LivingEntityRenderLayerRegistrationCallback.EVENT.register((entityType, renderer, helper, context) -> {
 			if (renderer instanceof AvatarRenderer<?> avatarRenderer) {
 				helper.register(new MinimeLayer(
 						(RenderLayerParent<AvatarRenderState, PlayerModel>) (Object) avatarRenderer, context));

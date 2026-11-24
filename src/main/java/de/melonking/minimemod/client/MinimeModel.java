@@ -96,11 +96,11 @@ public class MinimeModel extends PlayerModel {
 		leftLeg.xRot = lLegX;
 
 		// Zweite Skin-Schicht folgt der Basis
-		hat.copyFrom(head);
-		jacket.copyFrom(body);
-		rightSleeve.copyFrom(rightArm);
-		leftSleeve.copyFrom(leftArm);
-		rightPants.copyFrom(rightLeg);
-		leftPants.copyFrom(leftLeg);
+		hat.copyTransform(head);
+		jacket.copyTransform(body);
+		rightSleeve.copyTransform(rightArm);
+		leftSleeve.copyTransform(leftArm);
+		rightPants.copyTransform(rightLeg);
+		leftPants.copyTransform(leftLeg);
 	}
 }
