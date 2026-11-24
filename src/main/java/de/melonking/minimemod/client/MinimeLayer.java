@@ -70,45 +70,46 @@ public class MinimeLayer extends RenderLayer<AvatarRenderState, PlayerModel> {
 
 	/**
 	 * Setzt den Ursprung (Hals-Drehpunkt) des Minimes an die richtige Stelle und
-	 * skaliert. Einheiten: 1.0 = ein Block, 16px = 1.0; y zeigt hier nach unten.
+	 * skaliert. Einheiten: Modell-Pixel (16 Pixel entsprechen einem Block); y zeigt nach unten.
 	 */
 	private void place(MinimeSlot slot, PoseStack p, float s, float t) {
 		PlayerModel pm = getParentModel();
 		switch (slot) {
 			case HEAD -> {
 				pm.head.translateAndRotate(p);
-				p.translate(0f, -0.52f, 0f); // Oberkante des Kopfes
-				p.mulPose(Axis.ZP.rotation(Mth.sin(t * 0.25f) * 0.30f)); // Wippen links/rechts
-				p.translate(0f, -1.5f * s, 0f); // Fuesse auf den Drehpunkt
+				// Head pivot is at the bottom of the player's head. Move the
+				// mini's feet to the top surface (8 px above that pivot).
+				p.mulPose(Axis.ZP.rotation(Mth.sin(t * 0.25f) * 0.18f));
+				p.translate(0f, -8f - 24f * s, 0f);
 			}
 			case SHOULDER -> {
 				pm.body.translateAndRotate(p);
-				p.translate(-6f / 16f, 0f, 0f);
-				p.mulPose(Axis.ZP.rotation(Mth.sin(t * 0.10f) * 0.08f));
-				p.translate(0f, -0.75f * s, 0f); // Huefte auf den Drehpunkt
+				// Sit on the right shoulder, with the mini's feet on the arm top.
+				p.translate(-5f, 2f - 24f * s, 0f);
+				p.mulPose(Axis.ZP.rotation(Mth.sin(t * 0.10f) * 0.06f));
 			}
 			case HAND -> {
 				pm.rightArm.translateAndRotate(p);
-				p.translate(-1f / 16f, 10f / 16f, 0f);
-				p.mulPose(Axis.XP.rotation(Mth.sin(t * 0.20f) * 0.35f));
-				p.translate(0f, 0.7f * s, 0f);
+				// The mini raises both arms, so its head/body hang below the hand.
+				p.translate(0f, 12f, 0f);
+				p.mulPose(Axis.XP.rotation(Mth.sin(t * 0.20f) * 0.12f));
 			}
 			case CHAIN -> {
 				pm.body.translateAndRotate(p);
-				p.translate(0f, 1f / 16f, -(2f / 16f + 0.15f * s));
-				p.mulPose(Axis.XP.rotation(Mth.sin(t * 0.15f) * 0.25f)); // Pendel
-				p.translate(0f, 0.5f * s, 0f);
+				// Front of the chest; negative Z is the front of the player model.
+				p.translate(0f, 2f, -3.5f);
+				p.mulPose(Axis.XP.rotation(Mth.sin(t * 0.15f) * 0.18f));
 			}
 			case ARM -> {
 				pm.leftArm.translateAndRotate(p);
-				p.translate(3.5f / 16f + 0.12f * s, 3f / 16f, 0f);
-				p.translate(0f, -0.75f * s, 0f);
+				// Sit on top of the left upper arm.
+				p.translate(0f, 2f - 24f * s, 0f);
 			}
 			case SIT -> {
 				pm.body.translateAndRotate(p);
-				p.translate(0f, 7f / 16f, 2f / 16f + 0.14f * s);
-				p.mulPose(Axis.YP.rotation((float) Math.PI)); // schaut nach hinten
-				p.translate(0f, -0.75f * s, 0f);
+				// Sit on the upper back, facing away from the player.
+				p.translate(0f, -24f * s, 3.5f);
+				p.mulPose(Axis.YP.rotation((float) Math.PI));
 			}
 		}
 		p.scale(s, s, s);

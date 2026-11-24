@@ -95,22 +95,10 @@ public class MinimeModel extends PlayerModel {
 		rightLeg.xRot = rLegX;
 		leftLeg.xRot = lLegX;
 
-		// Zweite Skin-Schicht folgt der Basis.
-		// Minecraft 26.2 stellt keine copyFrom/copyTransform-Methode mehr bereit,
-		// daher werden Position, Rotation und Skalierung direkt uebertragen.
-		copyPartTransform(hat, head);
-		copyPartTransform(jacket, body);
-		copyPartTransform(rightSleeve, rightArm);
-		copyPartTransform(leftSleeve, leftArm);
-		copyPartTransform(rightPants, rightLeg);
-		copyPartTransform(leftPants, leftLeg);
-	}
-
-	private static void copyPartTransform(ModelPart target, ModelPart source) {
-		target.setPos(source.x, source.y, source.z);
-		target.setRotation(source.xRot, source.yRot, source.zRot);
-		target.xScale = source.xScale;
-		target.yScale = source.yScale;
-		target.zScale = source.zScale;
+		// Outer-Layer-Teile (Hat, Jacket, Sleeves und Pants) sind im
+		// PlayerModel bereits Kinder der jeweiligen Basisteile. Sie erben
+		// deren Transformation automatisch. Nicht manuell kopieren, sonst
+		// wird die Transformation doppelt angewendet und die Schichten
+		// verschieben sich neben Arme bzw. Beine.
 	}
 }
