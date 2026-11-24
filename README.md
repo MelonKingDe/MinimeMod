@@ -1,31 +1,12 @@
-# Minime Mod
+# MinimeMod (position adjustment v8)
 
-Fabric mod for **Minecraft 26.2** – small animated mini versions of any player skin that follow you around (like the Minimes in NoRiskClient / LabyMod).
+This version adjusts the attachment transforms for the head, shoulder, hand, chain, and arm slots.
 
-## Features
-- 6 slots: **Head, Shoulder, Hand, Chain, Arm, Sit**
-- Every slot has its own animation (e.g. the head Minime waves and wobbles left/right, the chain Minime swings like a pendulum)
-- Settings menu (default key: `K`): enable/disable each slot, enter the **player name** whose skin is loaded, size and animation speed
-- Skins are loaded by name via the Mojang API (classic + slim, legacy 64x32 skins too)
-- Config: `config/minimemod.json`
+- The head minime is moved down to sit close to the player's head surface.
+- Shoulder and arm minimes are anchored to the corresponding arm model pivots instead of the body origin.
+- The hand minime is positioned relative to the right hand point.
+- The retired back slot remains removed.
 
-## Build
-Requires **Java 25**.
+Build with Java 25 and Gradle 9.8+ using `gradle build`.
 
-```
-gradle wrapper      # once, creates gradlew
-./gradlew build     # jar ends up in build/libs/
-```
-
-Every push also builds on GitHub Actions (`.github/workflows/build.yml`); the jar is uploaded as an artifact.
-
-## Versions
-```
-minecraft_version=26.2
-loader_version=0.20.1
-loom_version=1.19-SNAPSHOT
-fabric_api_version=0.161.0+26.2
-```
-
-## License
-MIT
+These placement changes still require an in-game visual check because the exact result depends on the Minecraft renderer's model pose and the selected global/slot scale.

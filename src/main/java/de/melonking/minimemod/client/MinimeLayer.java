@@ -76,36 +76,39 @@ public class MinimeLayer extends RenderLayer<AvatarRenderState, PlayerModel> {
 		PlayerModel pm = getParentModel();
 		switch (slot) {
 			case HEAD -> {
+				// Anchor directly to the top plane of the player's head.
+				// Keep the mini's origin close to the surface: the previous extra
+				// height compensation made it visibly float above the player.
 				pm.head.translateAndRotate(p);
-				// Head pivot is at the bottom of the player's head. Move the
-				// mini's feet to the top surface (8 px above that pivot).
-				p.mulPose(Axis.ZP.rotation(Mth.sin(t * 0.25f) * 0.18f));
-				p.translate(0f, (-8f - 24f * s) / 16f, 0f);
+				p.translate(0f, -8f / 16f, 0f);
+				p.mulPose(Axis.ZP.rotation(Mth.sin(t * 0.25f) * 0.10f));
 			}
 			case SHOULDER -> {
-				pm.body.translateAndRotate(p);
-				// Sit on the right shoulder, with the mini's feet on the arm top.
-				p.translate(-5f / 16f, (2f - 24f * s) / 16f, 0f);
+				// Use the actual arm pivot (not the body origin), so the mini follows
+				// the shoulder when the player moves or swings their arm.
+				pm.rightArm.translateAndRotate(p);
+				p.translate(0f, (-2f - 24f * s) / 16f, 0f);
 				p.mulPose(Axis.ZP.rotation(Mth.sin(t * 0.10f) * 0.06f));
 			}
 			case HAND -> {
 				pm.rightArm.translateAndRotate(p);
-				// The mini raises both arms, so its head/body hang below the hand.
-				p.translate(0f, 12f / 16f, 0f);
-				p.mulPose(Axis.XP.rotation(Mth.sin(t * 0.20f) * 0.12f));
+				// The mini's raised hands are about 10 model pixels above its
+				// head pivot; place its pivot 10 px below the player's hand point.
+				p.translate(0f, 22f / 16f, 0f);
+				p.mulPose(Axis.XP.rotation(Mth.sin(t * 0.20f) * 0.08f));
 			}
 			case CHAIN -> {
 				pm.body.translateAndRotate(p);
-				// Front of the chest; negative Z is the front of the player model.
+				// Hang from the upper chest, slightly in front of the body.
 				p.translate(0f, 2f / 16f, -3.5f / 16f);
-				p.mulPose(Axis.XP.rotation(Mth.sin(t * 0.15f) * 0.18f));
+				p.mulPose(Axis.XP.rotation(Mth.sin(t * 0.15f) * 0.12f));
 			}
 			case ARM -> {
+				// Attach to the left arm pivot and place the mini on its upper face.
 				pm.leftArm.translateAndRotate(p);
-				// Sit on top of the left upper arm.
-				p.translate(0f, (2f - 24f * s) / 16f, 0f);
+				p.translate(0f, (-2f - 24f * s) / 16f, 0f);
+				p.mulPose(Axis.ZP.rotation(Mth.sin(t * 0.3f) * 0.05f));
 			}
 		}
 		p.scale(s, s, s);
-	}
-}
+	}}
