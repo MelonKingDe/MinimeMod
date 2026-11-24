@@ -1,0 +1,18 @@
+{
+  "key.minimemod.open_settings": "Open Minime settings",
+  "key.category.minimemod.main": "Minime Mod",
+  "minimemod.settings.title": "Minime Settings",
+  "minimemod.settings.enabled": "Minimes: %s",
+  "minimemod.settings.on": "ON",
+  "minimemod.settings.off": "OFF",
+  "minimemod.settings.scale": "Size: %s",
+  "minimemod.settings.speed": "Animation speed: %s",
+  "minimemod.settings.name_hint": "Player name (skin)",
+  "minimemod.settings.done": "Done",
+  "minimemod.slot.head": "Head",
+  "minimemod.slot.shoulder": "Shoulder",
+  "minimemod.slot.hand": "Hand",
+  "minimemod.slot.chain": "Chain",
+  "minimemod.slot.arm": "Arm",
+  "minimemod.slot.sit": "Sit"
+}

@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "minimemod",
+  "version": "${version}",
+  "name": "Minime Mod",
+  "description": "Small animated mini versions of any player skin that follow you around - on your head, shoulder, hand and more.",
+  "authors": ["MelonKingDe"],
+  "contact": {
+    "sources": "https://github.com/MelonKingDe/MinimeMod"
+  },
+  "license": "MIT",
+  "environment": "client",
+  "entrypoints": {
+    "client": ["de.melonking.minimemod.MinimeMod"]
+  },
+  "depends": {
+    "fabricloader": ">=0.20.1",
+    "minecraft": "~26.2",
+    "java": ">=25",
+    "fabric-api": "*"
+  }
+}
