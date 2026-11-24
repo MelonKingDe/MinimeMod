@@ -95,12 +95,22 @@ public class MinimeModel extends PlayerModel {
 		rightLeg.xRot = rLegX;
 		leftLeg.xRot = lLegX;
 
-		// Zweite Skin-Schicht folgt der Basis
-		hat.copyTransform(head);
-		jacket.copyTransform(body);
-		rightSleeve.copyTransform(rightArm);
-		leftSleeve.copyTransform(leftArm);
-		rightPants.copyTransform(rightLeg);
-		leftPants.copyTransform(leftLeg);
+		// Zweite Skin-Schicht folgt der Basis.
+		// Minecraft 26.2 stellt keine copyFrom/copyTransform-Methode mehr bereit,
+		// daher werden Position, Rotation und Skalierung direkt uebertragen.
+		copyPartTransform(hat, head);
+		copyPartTransform(jacket, body);
+		copyPartTransform(rightSleeve, rightArm);
+		copyPartTransform(leftSleeve, leftArm);
+		copyPartTransform(rightPants, rightLeg);
+		copyPartTransform(leftPants, leftLeg);
+	}
+
+	private static void copyPartTransform(ModelPart target, ModelPart source) {
+		target.setPos(source.x, source.y, source.z);
+		target.setRotation(source.xRot, source.yRot, source.zRot);
+		target.xScale = source.xScale;
+		target.yScale = source.yScale;
+		target.zScale = source.zScale;
 	}
 }
