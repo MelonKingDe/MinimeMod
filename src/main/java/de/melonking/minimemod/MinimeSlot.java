@@ -8,8 +8,7 @@ public enum MinimeSlot {
 	SHOULDER(0.30f),
 	HAND(0.25f),
 	CHAIN(0.20f),
-	ARM(0.28f),
-	SIT(0.30f);
+	ARM(0.28f);
 
 	public final float baseScale;
 

@@ -54,6 +54,8 @@ public class MinimeConfig {
 		if (instance.slots == null) {
 			instance.slots = new LinkedHashMap<>();
 		}
+		// Remove the retired back-mounted slot from older config files.
+		instance.slots.remove("SIT");
 		for (MinimeSlot s : MinimeSlot.values()) {
 			instance.slot(s);
 		}

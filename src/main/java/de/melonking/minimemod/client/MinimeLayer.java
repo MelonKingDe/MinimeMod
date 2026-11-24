@@ -105,12 +105,6 @@ public class MinimeLayer extends RenderLayer<AvatarRenderState, PlayerModel> {
 				// Sit on top of the left upper arm.
 				p.translate(0f, (2f - 24f * s) / 16f, 0f);
 			}
-			case SIT -> {
-				pm.body.translateAndRotate(p);
-				// Sit on the upper back, facing away from the player.
-				p.translate(0f, (-24f * s) / 16f, 3.5f / 16f);
-				p.mulPose(Axis.YP.rotation((float) Math.PI));
-			}
 		}
 		p.scale(s, s, s);
 	}

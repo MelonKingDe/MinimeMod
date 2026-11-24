@@ -28,12 +28,12 @@ public class MinimeModel extends PlayerModel {
 
 		switch (slot) {
 			case HEAD -> {
-				// Steht auf dem Kopf, winkt mit einem Arm und wippt mit dem Kopf
-				rArmX = -2.7f + Mth.sin(t * 0.55f) * 0.45f;
-				rArmZ = 0.2f;
-				lArmX = Mth.sin(t * 0.25f) * 0.15f;
-				lArmZ = -0.15f;
-				headZ = Mth.sin(t * 0.25f) * 0.12f;
+				// Sitzt auf dem Kopf: Beine nach vorne angewinkelt und locker baumelnd.
+				rLegX = sit + Mth.sin(t * 0.30f) * 0.12f;
+				lLegX = sit - Mth.sin(t * 0.30f) * 0.12f;
+				rArmX = -0.35f + Mth.sin(t * 0.45f) * 0.18f;
+				lArmX = -0.35f - Mth.sin(t * 0.45f) * 0.18f;
+				headZ = Mth.sin(t * 0.25f) * 0.08f;
 			}
 			case SHOULDER -> {
 				// Sitzt auf der Schulter, baumelt mit den Beinen, schaut sich um
@@ -69,14 +69,6 @@ public class MinimeModel extends PlayerModel {
 				lArmZ = -0.25f;
 				rArmX = -0.4f;
 				headZ = Mth.sin(t * 0.3f) * 0.1f;
-			}
-			case SIT -> {
-				// Sitzt huckepack auf dem Ruecken und schaut sich um
-				rLegX = sit + Mth.sin(t * 0.25f) * 0.18f;
-				lLegX = sit - Mth.sin(t * 0.25f) * 0.18f;
-				rArmX = -0.6f + Mth.sin(t * 0.2f) * 0.2f;
-				lArmX = -0.6f - Mth.sin(t * 0.2f) * 0.2f;
-				headY = Mth.sin(t * 0.12f) * 0.5f;
 			}
 		}
 	}
