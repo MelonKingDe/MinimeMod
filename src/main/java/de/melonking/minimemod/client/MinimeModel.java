@@ -104,11 +104,24 @@ public class MinimeModel extends PlayerModel {
 		// Die Skin-Outer-Layer sind separate ModelParts (keine Kinder der
 		// Basisteile). Deshalb muessen sie nach dem Setzen der Pose explizit
 		// dieselben Transformationen erhalten.
-		hat.copyTransform(head);
-		jacket.copyTransform(body);
-		rightSleeve.copyTransform(rightArm);
-		leftSleeve.copyTransform(leftArm);
-		rightPants.copyTransform(rightLeg);
-		leftPants.copyTransform(leftLeg);
+		copyPartTransform(hat, head);
+		copyPartTransform(jacket, body);
+		copyPartTransform(rightSleeve, rightArm);
+		copyPartTransform(leftSleeve, leftArm);
+		copyPartTransform(rightPants, rightLeg);
+		copyPartTransform(leftPants, leftLeg);
+	}
+
+	/** Copy only the transform values; ModelPart has no copyTransform/copyFrom method in 26.2. */
+	private static void copyPartTransform(ModelPart target, ModelPart source) {
+		target.x = source.x;
+		target.y = source.y;
+		target.z = source.z;
+		target.xRot = source.xRot;
+		target.yRot = source.yRot;
+		target.zRot = source.zRot;
+		target.xScale = source.xScale;
+		target.yScale = source.yScale;
+		target.zScale = source.zScale;
 	}
 }
