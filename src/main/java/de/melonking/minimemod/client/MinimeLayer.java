@@ -70,7 +70,7 @@ public class MinimeLayer extends RenderLayer<AvatarRenderState, PlayerModel> {
 
 	/**
 	 * Setzt den Ursprung (Hals-Drehpunkt) des Minimes an die richtige Stelle und
-	 * skaliert. Einheiten: Modell-Pixel (16 Pixel entsprechen einem Block); y zeigt nach unten.
+	 * skaliert. Einheiten: Modell-Pixel. PoseStack.translate erwartet Block-Einheiten, daher werden Pixel-Offsets durch 16 geteilt; y zeigt nach unten.
 	 */
 	private void place(MinimeSlot slot, PoseStack p, float s, float t) {
 		PlayerModel pm = getParentModel();
@@ -80,35 +80,35 @@ public class MinimeLayer extends RenderLayer<AvatarRenderState, PlayerModel> {
 				// Head pivot is at the bottom of the player's head. Move the
 				// mini's feet to the top surface (8 px above that pivot).
 				p.mulPose(Axis.ZP.rotation(Mth.sin(t * 0.25f) * 0.18f));
-				p.translate(0f, -8f - 24f * s, 0f);
+				p.translate(0f, (-8f - 24f * s) / 16f, 0f);
 			}
 			case SHOULDER -> {
 				pm.body.translateAndRotate(p);
 				// Sit on the right shoulder, with the mini's feet on the arm top.
-				p.translate(-5f, 2f - 24f * s, 0f);
+				p.translate(-5f / 16f, (2f - 24f * s) / 16f, 0f);
 				p.mulPose(Axis.ZP.rotation(Mth.sin(t * 0.10f) * 0.06f));
 			}
 			case HAND -> {
 				pm.rightArm.translateAndRotate(p);
 				// The mini raises both arms, so its head/body hang below the hand.
-				p.translate(0f, 12f, 0f);
+				p.translate(0f, 12f / 16f, 0f);
 				p.mulPose(Axis.XP.rotation(Mth.sin(t * 0.20f) * 0.12f));
 			}
 			case CHAIN -> {
 				pm.body.translateAndRotate(p);
 				// Front of the chest; negative Z is the front of the player model.
-				p.translate(0f, 2f, -3.5f);
+				p.translate(0f, 2f / 16f, -3.5f / 16f);
 				p.mulPose(Axis.XP.rotation(Mth.sin(t * 0.15f) * 0.18f));
 			}
 			case ARM -> {
 				pm.leftArm.translateAndRotate(p);
 				// Sit on top of the left upper arm.
-				p.translate(0f, 2f - 24f * s, 0f);
+				p.translate(0f, (2f - 24f * s) / 16f, 0f);
 			}
 			case SIT -> {
 				pm.body.translateAndRotate(p);
 				// Sit on the upper back, facing away from the player.
-				p.translate(0f, -24f * s, 3.5f);
+				p.translate(0f, (-24f * s) / 16f, 3.5f / 16f);
 				p.mulPose(Axis.YP.rotation((float) Math.PI));
 			}
 		}
